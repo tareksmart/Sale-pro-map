@@ -41,8 +41,7 @@ class Homepage extends StatelessWidget {
                       )
                     ],
                   ),
-                  IconButton(
-                      onPressed: () {}, icon: const Icon(Icons.window_rounded))
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.window))
                 ],
               ),
               const SizedBox(
@@ -62,7 +61,7 @@ class Homepage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   CardItem(
-                      imageHeight: .2,
+                      imageHeight: .15,
                       imageWidth: double.infinity,
                       heightBox: .3,
                       image: imageSales,

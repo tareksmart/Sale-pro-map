@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sales_pro_map_app/utilities/constant.dart';
 import 'package:sales_pro_map_app/utilities/routers.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
@@ -14,15 +15,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Color(0xf4f5fc),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: Routers.onGenerateRoute,
       initialRoute: AppRoutes.homePage,
       title: 'Sales Pro Map',
       theme: ThemeData(
-       primarySwatch: Colors.green,
-      ),
-      
+          scaffoldBackgroundColor: const Color(primaryColor),
+          primarySwatch: Colors.green,
+          primaryColor: const Color(primaryColor),
+          primaryColorDark: const Color(primaryColorDark)),
     );
   }
 }

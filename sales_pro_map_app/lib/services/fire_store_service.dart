@@ -14,23 +14,38 @@ class FireStoreServices {
     return snapshots.map((event) => builder(event.data(), event.id));
   }
 
-  Stream<List<T>> collectionStream<T>({required path,required T Function (Map<String,dynamic>?data,String documentId)builder,
-  Query Function (Query query)?queryBuilder,int Function(T lhs, T rhs)? sort})
-  {
-    Query query=_fireStoreInstance.collection(path);
-    if(queryBuilder!=null){
-      query=queryBuilder(query);
-          }
-          final snapshots=query.snapshots();
-          return snapshots.map((event) {
-            final result=event.docs.map((e) {
-              return builder(e.data() as Map<String,dynamic>,e.id,);
-            }).where((value)=>value!=null).tolist();
-           if (sort != null) {
+    Stream<List<T>> collectionStream<T>(
+      {required String path,
+      required T Function(Map<String, dynamic>? data, String documentId)
+          builder,//وظيفته يرول على ماب او بيانات داخل دوكيمنت
+      Query Function(Query query)? queryBuilder,
+      int Function(T lhs, T rhs)? sort}) {
+    Query query = _fireStoreInstance.collection(path); //اعمل query للكل all collections
+    if (queryBuilder != null) {
+      //لو ال querybuilder اللى جاى من بره ملبان يعنى عايزين نستعلم عن شىء معين
+      query = queryBuilder(
+          query); //خد query for all collection مرره بالqueryBuilder والنتيجة حطها فى ال object query من نوع َQuery
+    }
+    final snapshots = query.snapshots();
+    return snapshots.map(
+      (snapshot /*one collection*/) {
+        final result = snapshot.docs
+            .map(
+              (snapshot /*one document*/) {
+                return builder(
+                  snapshot.data() as Map<String, dynamic>,
+                  snapshot.id,
+                );
+              },
+            )
+            .where((value) => value != null)
+            .toList();
+        if (sort != null) {
           result.sort(sort);
         }
-         },
-         );
+        return result;
+      },
+    );
   }
-  
-}
+  }
+

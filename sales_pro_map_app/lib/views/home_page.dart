@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
+import 'package:sales_pro_map_app/utilities/routes.dart';
+import 'package:sales_pro_map_app/views/prices.dart';
 import 'package:sales_pro_map_app/views/widgets/card.dart';
 
 class Homepage extends StatelessWidget {
@@ -47,7 +49,8 @@ class Homepage extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const CardItem(
+              CardItem(
+                  tab: () {},
                   imageHeight: .2,
                   imageWidth: double.infinity,
                   heightBox: .3,
@@ -59,8 +62,12 @@ class Homepage extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   CardItem(
+                      tab: () {
+                     Navigator.of(context,rootNavigator: true).pushNamed(AppRoutes.prices)  ;
+                    
+                      },
                       imageHeight: .15,
                       imageWidth: double.infinity,
                       heightBox: .3,
@@ -68,6 +75,7 @@ class Homepage extends StatelessWidget {
                       widthBox: .45,
                       title: 'Sales'),
                   CardItem(
+                      tab: () {},
                       imageHeight: .2,
                       imageWidth: double.infinity,
                       heightBox: .3,
@@ -78,8 +86,9 @@ class Homepage extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
+                children: [
                   CardItem(
+                      tab: () {},
                       imageHeight: .2,
                       imageWidth: double.infinity,
                       heightBox: .3,
@@ -87,6 +96,7 @@ class Homepage extends StatelessWidget {
                       widthBox: .45,
                       title: 'Spent'),
                   CardItem(
+                      tab: () {},
                       imageHeight: .2,
                       imageWidth: double.infinity,
                       heightBox: .3,

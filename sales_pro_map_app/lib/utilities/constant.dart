@@ -2,8 +2,9 @@ const int primaryColor = 0xffe8eaf6;
 const int primaryColorDark = 0x00796B;
 const int accentColor = 0xff9E9E9E;
 const int primaryText = 0xff212121;
-const int iconColor = 0xFFFFFF;
+const int iconColor = 0xFFF;
 const int buttonColor = 0x757575;
+const String itemsCollection = 'items';
 const String image =
     "https://i.pinimg.com/564x/2a/4e/8d/2a4e8dab6791ed643d5180bc72167f6d.jpg";
 const String imageLogo =

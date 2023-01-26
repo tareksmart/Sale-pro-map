@@ -10,7 +10,7 @@ class FireStroreDataBase implements Database {
   @override
   Stream<List<ProductPrices>> prices() {
     return _service.collectionStream(
-        path: 'items/',
+        path: 'items',
         builder: ((data, documentId) =>
             ProductPrices.fromMap(data as Map<String, dynamic>)));
   }

@@ -8,12 +8,10 @@ import 'package:sales_pro_map_app/utilities/routers.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp(
-
-);
-  runApp( MyApp());
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

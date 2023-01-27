@@ -11,7 +11,7 @@ class Routers{
       case AppRoutes.homePage:
       return MaterialPageRoute(builder: (_)=>Homepage());
       case AppRoutes.prices:
-      return MaterialPageRoute(builder: (_)=>const Prices());
+      return MaterialPageRoute(builder: (_)=> Prices());
         default:
        return MaterialPageRoute(builder: (_)=>Homepage());
     }

@@ -6,12 +6,13 @@ import 'package:sales_pro_map_app/controller/prov.dart';
 import 'package:sales_pro_map_app/services/database_controller.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
 import 'package:sales_pro_map_app/views/widgets/card_price_item.dart';
+import 'package:sales_pro_map_app/views/widgets/search_field.dart';
 import '../model/product_price.dart';
 import '../services/database_controller.dart';
 
 class Prices extends StatelessWidget {
-  const Prices({super.key});
-
+   Prices({super.key});
+ late List<ProductPrices>pricesList =[];
   @override
   Widget build(BuildContext context) {
     //final database=Provider.of<Database>(context);
@@ -19,6 +20,9 @@ class Prices extends StatelessWidget {
     //final database = FireStroreDataBase();
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          SearchFiekd(priceList: pricesList),
+        ],
         title: Text(
           'Prices',
           style: Theme.of(context)
@@ -36,11 +40,11 @@ class Prices extends StatelessWidget {
             future: prov.get(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                final pricesList = snapshot.data;
+                 pricesList =snapshot.data!;
                 return ListView.builder(
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, index) {
-                      return CardPrice(productPrices: pricesList![index]);
+                      return CardPrice(productPrices: pricesList[index]);
                     });
               }
               if (snapshot.hasError) {

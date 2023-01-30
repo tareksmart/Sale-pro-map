@@ -19,35 +19,38 @@ class Prices extends StatefulWidget {
 
 class _PricesState extends State<Prices> {
   late List<ProductPrices> pricesList = [];
+  late List<ProductPrices> filterList = [];
 
   @override
   void initState() {
     super.initState();
   }
 
-  List<ProductPrices> searchList(pricesList) {
-    return SearchFiekd(priceList: pricesList.length > 0 ? pricesList : [])
-        .item_prices(true);
+  void searchList(listedFilter) {
+    filterList = listedFilter;
   }
 
   @override
   Widget build(BuildContext context) {
     //final database=Provider.of<Database>(context);
     final provider = Provider.of<prov>(context);
-    Widget SearchWidget =
-        SearchFiekd(priceList: pricesList.length > 0 ? pricesList : []);
-   bool _isSearched = true;
+    Widget SearchWidget = SearchFiekd(
+      priceList: pricesList.length > 0 ? pricesList : [],
+      filterItemFunc: searchList,
+    );
+    bool _isSearched = true;
     //final database = FireStroreDataBase();
     return Scaffold(
       appBar: AppBar(
-       
-        title:_isSearched?SearchWidget: Text(
-          'Prices',
-          style: Theme.of(context)
-              .textTheme
-              .headline6!
-              .copyWith(color: const Color(primaryColor)),
-        ),
+        title: _isSearched
+            ? SearchWidget
+            : Text(
+                'Prices',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6!
+                    .copyWith(color: const Color(primaryColor)),
+              ),
       ),
       body: Consumer<prov>(
         builder: (context, prov, child) => SizedBox(
@@ -57,14 +60,14 @@ class _PricesState extends State<Prices> {
             if (snapshot.hasData) {
               pricesList = snapshot.data!;
               return ListView.builder(
-                  itemCount: snapshot.data?.length,
+                  itemCount:100,
                   itemBuilder: (context, index) {
                     print('==================== search');
 
-                    print(searchList(pricesList).length);
+                    print(filterList.length);
                     return CardPrice(
-                        productPrices: searchList(pricesList).length > 0
-                            ? searchList(pricesList)[index]
+                        productPrices: filterList.length > 0
+                            ? filterList[index]
                             : pricesList[index]);
                   });
             }

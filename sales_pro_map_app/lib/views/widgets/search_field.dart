@@ -5,10 +5,10 @@ import 'package:sales_pro_map_app/model/product_price.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
 
 class SearchFiekd extends StatefulWidget {
-  SearchFiekd({super.key, required this.priceList});
+  SearchFiekd({super.key, required this.priceList,required this.filterItemFunc});
   List<ProductPrices> priceList;
    List<ProductPrices> filterList=[];
-
+Function (List<ProductPrices> filterList)filterItemFunc;
   @override
   State<SearchFiekd> createState() => _SearchFiekdState();
 
@@ -42,9 +42,7 @@ class _SearchFiekdState extends State<SearchFiekd> {
                 .where((element) =>
                     element.ItemName.toLowerCase().startsWith(priceName))
                 .toList();
-            widget.item_prices( true);
-            print('============================');
-            print(widget.filterList.length);
+          widget.filterItemFunc(widget.filterList);
             setState(() {
               
             });

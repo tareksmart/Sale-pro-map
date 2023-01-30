@@ -8,15 +8,18 @@ import 'package:sales_pro_map_app/views/prices.dart';
 
 import '../views/home_page.dart';
 
-class Routers{
-  static Route<dynamic> onGenerateRoute(RouteSettings settings){
+class Routers {
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.homePage:
-      return MaterialPageRoute(builder: (_)=>Homepage());
+        return MaterialPageRoute(builder: (_) => Homepage());
       case AppRoutes.prices:
-      return MaterialPageRoute(builder: (_)=> ChangeNotifierProvider<prov>(create: (context) => prov(path: itemsCollection), child: Prices()));
-        default:
-       return MaterialPageRoute(builder: (_)=>Homepage());
+        return MaterialPageRoute(
+            builder: (_) => ChangeNotifierProvider<prov>(
+                create: (context) => prov(path: itemsCollection),
+                child: Prices(),lazy: true,));
+      default:
+        return MaterialPageRoute(builder: (_) => Homepage());
     }
   }
 }

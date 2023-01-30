@@ -4,40 +4,55 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sales_pro_map_app/model/product_price.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
 
-class SearchFiekd extends StatelessWidget {
+class SearchFiekd extends StatefulWidget {
   SearchFiekd({super.key, required this.priceList});
+  List<ProductPrices> priceList;
+   List<ProductPrices> filterList=[];
+
+  @override
+  State<SearchFiekd> createState() => _SearchFiekdState();
+
+   List<ProductPrices> item_prices(bool isSearch) {
+    if (isSearch) {
+      return filterList;
+    } else
+      return [];
+  }
+}
+
+class _SearchFiekdState extends State<SearchFiekd> {
   TextEditingController _searchControler = TextEditingController();
-   List<ProductPrices> priceList;
-   late List<ProductPrices> filterList;
+
+  
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 100,
-      child: Placeholder(
-        child: TextFormField(
-          decoration: InputDecoration(
-              hintText: 'find price',
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: const Color(accentColor))),
-          onChanged: (priceName) {
-            filterList = priceList
+      width: 300,
+      child: TextFormField(
+        decoration: InputDecoration(
+            hintText: 'find price',
+            hintStyle: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: const Color(accentColor))),
+        onChanged: (priceName) {
+          if (priceName.trim() != "") {
+            widget.filterList = widget.priceList
                 .where((element) =>
                     element.ItemName.toLowerCase().startsWith(priceName))
                 .toList();
-            item_prices(filterList, priceName.isEmpty ? false : true);
-          },
-        ),
+            widget.item_prices( true);
+            print('============================');
+            print(widget.filterList.length);
+            setState(() {
+              
+            });
+          }
+        },
       ),
     );
   }
 
-  static List<ProductPrices> item_prices(filterList, bool isSearch) {
-    if(isSearch){
-      return filterList;
-    }
-    else
-    return [];
-  }
+ 
 }

@@ -10,12 +10,11 @@ class prov with ChangeNotifier {
   Future<List<ProductPrices>> get() async {
     final col = _service.collection(path);
     final docs = await col.get();
-    
+   // notifyListeners();
     return docs.docs.map((e) {
       // print('==================');
       // print(e.data());
       return ProductPrices.fromMap(e.data());
     }).toList();
-    notifyListeners();
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sales_pro_map_app/controller/prov.dart';
+import 'package:sales_pro_map_app/utilities/constant.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
 import 'package:sales_pro_map_app/views/prices.dart';
 
@@ -11,7 +14,7 @@ class Routers{
       case AppRoutes.homePage:
       return MaterialPageRoute(builder: (_)=>Homepage());
       case AppRoutes.prices:
-      return MaterialPageRoute(builder: (_)=> Prices());
+      return MaterialPageRoute(builder: (_)=> ChangeNotifierProvider<prov>(create: (context) => prov(path: itemsCollection), child: Prices()));
         default:
        return MaterialPageRoute(builder: (_)=>Homepage());
     }

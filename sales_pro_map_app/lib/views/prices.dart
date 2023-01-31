@@ -72,7 +72,7 @@ class _PricesState extends State<Prices> {
   @override
   Widget build(BuildContext context) {
     //final database=Provider.of<Database>(context);
-    final provider = Provider.of<Database>(context,listen: true);
+    final provider = Provider.of<Database>(context);
     Widget SearchWidget = SearchFiekd(
       priceList: pricesList.length > 0 ? pricesList : [],
       filterItemFunc: searchList,

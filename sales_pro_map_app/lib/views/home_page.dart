@@ -25,6 +25,7 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final database=Provider.of<Database>(context);
     return Scaffold(
         body: SafeArea(
          child: SingleChildScrollView(
@@ -82,7 +83,7 @@ class Homepage extends StatelessWidget {
                      CardItem(
                          tab: () {
                            Navigator.of(context)
-                               .pushNamed(AppRoutes.prices);
+                               .pushNamed(AppRoutes.prices,arguments: {'database':database});
                          },
                          imageHeight: .15,
                          imageWidth: double.infinity,

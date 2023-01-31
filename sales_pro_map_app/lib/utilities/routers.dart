@@ -11,15 +11,21 @@ import 'package:sales_pro_map_app/views/prices.dart';
 import '../views/home_page.dart';
 
 class Routers {
+  
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.homePage:
-        return MaterialPageRoute(builder: (_) => Homepage());
-      case AppRoutes.prices:
+      case AppRoutes.homePage:{
+        return MaterialPageRoute(builder: (_) =>        
+                Homepage());}
+      case AppRoutes.prices:{
+        final args=settings.arguments as Map<String,dynamic>;
+        final database=args['database'];
         return MaterialPageRoute(
-            builder: (_) => Provider<Database>(
-                create: (context) => prov(path: itemsCollection),
-                child: Prices(),lazy: true,));
+            builder: (_) => Provider<Database>.value(value:database ,
+                
+                child: Prices()));
+      }
+        
       default:
         return MaterialPageRoute(builder: (_) => Homepage());
     }

@@ -21,16 +21,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: Routers.onGenerateRoute,
-      initialRoute: AppRoutes.homePage,
-      title: 'Sales Pro Map',
-      theme: ThemeData(
-          scaffoldBackgroundColor: const Color(primaryColor),
-          primarySwatch: Colors.green,
-          primaryColor: const Color(primaryColor),
-          primaryColorDark: const Color(primaryColorDark)),
+    return Provider<Database>(
+      create:(_)=> FireStroreDataBase(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: Routers.onGenerateRoute,
+        initialRoute: AppRoutes.homePage,
+        title: 'Sales Pro Map',
+        theme: ThemeData(
+            scaffoldBackgroundColor: const Color(primaryColor),
+            primarySwatch: Colors.green,
+            primaryColor: const Color(primaryColor),
+            primaryColorDark: const Color(primaryColorDark)),
+      ),
     );
   }
 }

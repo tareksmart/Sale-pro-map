@@ -9,9 +9,12 @@ class FireStroreDataBase implements Database {
   final _service = FireStoreServices.instance;
   @override
   Stream<List<ProductPrices>> prices() {
-    return _service.collectionStream(
+    var x= _service.collectionStream(
         path: 'items',
         builder: ((data, documentId) =>
             ProductPrices.fromMap(data as Map<String, dynamic>)));
+            print('==================');
+            print(x);
+    return x;
   }
 }

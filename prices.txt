@@ -25,11 +25,7 @@ class _PricesState extends State<Prices> {
   void initState() {
     super.initState();
   }
-@override
-  void dispose() {
-   
-    super.dispose();
-  }
+
   void searchList(listedFilter) {
     filterList = listedFilter;
   }
@@ -72,7 +68,7 @@ class _PricesState extends State<Prices> {
   @override
   Widget build(BuildContext context) {
     //final database=Provider.of<Database>(context);
-    final provider = Provider.of<Database>(context,listen: true);
+    final provider = Provider.of<prov>(context,listen: true);
     Widget SearchWidget = SearchFiekd(
       priceList: pricesList.length > 0 ? pricesList : [],
       filterItemFunc: searchList,
@@ -93,8 +89,8 @@ class _PricesState extends State<Prices> {
               ),
       ),
       body: SizedBox(
-        child: StreamBuilder<List<ProductPrices>>(
-          stream: provider.prices(),
+        child: FutureBuilder<List<ProductPrices>>(
+          future: provider.get(),
           builder: (context, snapshot) {
             rebuild++;
              print('rebuild =====================');

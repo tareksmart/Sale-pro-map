@@ -43,9 +43,7 @@ class _SearchFiekdState extends State<SearchFiekd> {
                     element.ItemName.toLowerCase().startsWith(priceName))
                 .toList();
           widget.filterItemFunc(widget.filterList);
-            setState(() {
-              
-            });
+          
           }
         },
       ),

@@ -34,45 +34,12 @@ class _PricesState extends State<Prices> {
     filterList = listedFilter;
   }
 
-  Widget buildList(list) {
-    return SizedBox(
-      child: FutureBuilder<List<ProductPrices>>(
-        future: list,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            pricesList = snapshot.data!;
-            return ListView.builder(
-                itemCount: pricesList.length,
-                itemBuilder: (context, index) {
-                  print('==================== search');
-
-                  print(filterList.length);
-                  return CardPrice(
-                      productPrices: filterList.length > 0
-                          ? filterList[index]
-                          : pricesList[index]);
-                });
-          }
-          if (snapshot.hasError) {
-            return Text('error');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
-    );
-  }
+ 
  int rebuild = 0;
   @override
   Widget build(BuildContext context) {
     //final database=Provider.of<Database>(context);
-    final provider = Provider.of<Database>(context);
+ 
     Widget SearchWidget = SearchFiekd(
       priceList: pricesList.length > 0 ? pricesList : [],
       filterItemFunc: searchList,
@@ -93,39 +60,51 @@ class _PricesState extends State<Prices> {
               ),
       ),
       body: SizedBox(
-        child: StreamBuilder<List<ProductPrices>>(
-          stream: provider.prices(),
-          builder: (context, snapshot) {
-            rebuild++;
-             print('rebuild =====================');
-             print(rebuild);
-            if (snapshot.hasData) {
-              pricesList = snapshot.data!;
-              return ListView.builder(
-                  itemCount: filterList.length ?? pricesList.length,
-                  itemBuilder: (context, index) {
-                    print('==================== search');
-
-                    print(filterList.length);
-                 
-                    return CardPrice(
-                        productPrices:
-                            filterList[index] ?? pricesList[index]);
-                  });
-            }
-            if (snapshot.hasError) {
-              return Text('error');
-            }
-
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
-
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-           
-          },
+        child: ChangeNotifierProvider<prov>(
+          create: (context)=>prov(path: itemsCollection),
+          child: Consumer<prov>(builder: (context, prov2, child) => 
+             FutureBuilder<List<ProductPrices>>(
+              future:prov2.get() ,
+              builder: (context, snapshot) {
+                
+                rebuild++;
+                 print('rebuild =====================');
+                 print(rebuild);
+                if (snapshot.hasData) {
+                    pricesList = snapshot.data!;
+                   if (pricesList == null) {
+                            return Center(
+                              child: Text('no data is available'),
+                            );
+                          }
+                
+                  return ListView.builder(
+                     itemCount: filterList.length ?? pricesList.length,
+                     itemBuilder: (context, index) {
+                       print('==================== search');
+                             
+                       print(filterList.length);
+                    
+                       return CardPrice(
+                          productPrices:
+                              filterList[index] ?? pricesList[index]);
+                     });
+                }
+                if (snapshot.hasError) {
+                  return Text('error');
+                }
+                  
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                  
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+               
+              },
+            ),
+          ),
         ),
       ),
     );

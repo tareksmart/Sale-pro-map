@@ -5,25 +5,17 @@ import 'package:sales_pro_map_app/model/product_price.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
 
 class SearchFiekd extends StatefulWidget {
-  SearchFiekd({super.key, required this.priceList,required this.filterItemFunc});
-  List<ProductPrices> priceList;
-   List<ProductPrices> filterList=[];
-Function (List<ProductPrices> filterList)filterItemFunc;
+  SearchFiekd(
+      {super.key, required this.filterItemFunc});
+ 
+  String search = '';
+  Function(String search) filterItemFunc;
   @override
   State<SearchFiekd> createState() => _SearchFiekdState();
-
-   List<ProductPrices> item_prices(bool isSearch) {
-    if (isSearch) {
-      return filterList;
-    } else
-      return [];
-  }
 }
 
 class _SearchFiekdState extends State<SearchFiekd> {
   TextEditingController _searchControler = TextEditingController();
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +30,10 @@ class _SearchFiekdState extends State<SearchFiekd> {
                 .copyWith(color: const Color(accentColor))),
         onChanged: (priceName) {
           if (priceName.trim() != "") {
-            widget.filterList = widget.priceList
-                .where((element) =>
-                    element.ItemName.toLowerCase().startsWith(priceName))
-                .toList();
-          widget.filterItemFunc(widget.filterList);
-          
+            widget.filterItemFunc(priceName);
           }
         },
       ),
     );
   }
-
- 
 }

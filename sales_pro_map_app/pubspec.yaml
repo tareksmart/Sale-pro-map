@@ -21,6 +21,7 @@ dependencies:
   provider:
   flutter_rating_bar: ^4.0.1
   firebase_core_platform_interface:
+  fl_chart:
   
 dev_dependencies:
   flutter_test:

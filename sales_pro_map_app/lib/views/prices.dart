@@ -19,34 +19,34 @@ class Prices extends StatefulWidget {
 
 class _PricesState extends State<Prices> {
   late List<ProductPrices> pricesList = [];
-  late List<ProductPrices> filterList = [];
+  String filtersearch = '';
 
   @override
   void initState() {
     super.initState();
   }
-@override
+
+  @override
   void dispose() {
-   
     super.dispose();
   }
-  void searchList(listedFilter) {
-    filterList = listedFilter;
+
+  void searchList(String searchItem) {
+    setState(() {
+      filtersearch = searchItem;
+    });
   }
 
- 
- int rebuild = 0;
+  int rebuild = 0;
   @override
   Widget build(BuildContext context) {
-    //final database=Provider.of<Database>(context);
- 
+    final database = Provider.of<Database>(context);
+
     Widget SearchWidget = SearchFiekd(
-      priceList: pricesList.length > 0 ? pricesList : [],
       filterItemFunc: searchList,
     );
     bool _isSearched = true;
-   
-    //final database = FireStroreDataBase();
+
     return Scaffold(
       appBar: AppBar(
         title: _isSearched
@@ -60,51 +60,41 @@ class _PricesState extends State<Prices> {
               ),
       ),
       body: SizedBox(
-        child: ChangeNotifierProvider<prov>(
-          create: (context)=>prov(path: itemsCollection),
-          child: Consumer<prov>(builder: (context, prov2, child) => 
-             FutureBuilder<List<ProductPrices>>(
-              future:prov2.get() ,
-              builder: (context, snapshot) {
-                
-                rebuild++;
-                 print('rebuild =====================');
-                 print(rebuild);
-                if (snapshot.hasData) {
-                    pricesList = snapshot.data!;
-                   if (pricesList == null) {
-                            return Center(
-                              child: Text('no data is available'),
-                            );
-                          }
-                
-                  return ListView.builder(
-                     itemCount: filterList.length ?? pricesList.length,
-                     itemBuilder: (context, index) {
-                       print('==================== search');
-                             
-                       print(filterList.length);
-                    
-                       return CardPrice(
-                          productPrices:
-                              filterList[index] ?? pricesList[index]);
-                     });
-                }
-                if (snapshot.hasError) {
-                  return Text('error');
-                }
-                  
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                  
+        child: StreamBuilder<List<ProductPrices>>(
+          stream: database.prices(filtersearch),
+          builder: (context, snapshot) {
+           
+            rebuild++;
+          //  pricesList.clear();
+            print('rebuild =====================');
+            print(rebuild);
+            if (snapshot.hasData) {
+              pricesList = snapshot.data!;
+              if (pricesList.length <= 0) {
                 return const Center(
-                  child: CircularProgressIndicator(),
+                  child: Text('no data is available'),
                 );
+              }
+              return ListView.builder(
+                itemCount: pricesList.length,
+                itemBuilder: (context, index) {
                
-              },
-            ),
-          ),
+                  return CardPrice(productPrices: pricesList[index]);
+                },
+              );
+            }
+            if (snapshot.hasError) {
+              return const Text('error');
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ),
     );

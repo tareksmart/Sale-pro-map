@@ -25,110 +25,117 @@ class Homepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final database=Provider.of<Database>(context);
+    final database = Provider.of<Database>(context);
+    final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: SafeArea(
-         child: SingleChildScrollView(
-           child: Padding(
-             padding:
-                 const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-             child: Column(
-               children: [
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     SizedBox.square(
-                       dimension: 100,
-                       child: Image.network(
-                         image,
-                         fit: BoxFit.cover,
-                       ),
-                     ),
-                     Column(
-                       children: [
-                         const Text('Good Morning'),
-                         const SizedBox(
-                           height: 16,
-                         ),
-                         Text(
-                           'Tarek Rabeia',
-                           style: Theme.of(context)
-                               .textTheme
-                               .headlineMedium!
-                               .copyWith(color: Colors.black),
-                         )
-                       ],
-                     ),
-                     IconButton(
-                         onPressed: () {}, icon: const Icon(Icons.window))
-                   ],
-                 ),
-                 const SizedBox(
-                   height: 40,
-                 ),
-                 CardItem(
-                     tab: () {},
-                     imageHeight: .2,
-                     imageWidth: double.infinity,
-                     heightBox: .3,
-                     image: imageLogo,
-                     widthBox: 1,
-                     title: 'Sales Pro'),
-                 const SizedBox(
-                   height: 16,
-                 ),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     CardItem(
-                         tab: () {
-                           Navigator.of(context)
-                               .pushNamed(AppRoutes.prices,arguments: {'database':database});
-                         },
-                         imageHeight: .15,
-                         imageWidth: double.infinity,
-                         heightBox: .3,
-                         image: imageSales,
-                         widthBox: .45,
-                         title: 'Sales'),
-                     CardItem(
-                         tab: () {},
-                         imageHeight: .2,
-                         imageWidth: double.infinity,
-                         heightBox: .3,
-                         image: imageIncome,
-                         widthBox: .45,
-                         title: 'Income'),
-                   ],
-                 ),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                   children: [
-                     CardItem(
-                         tab: () {},
-                         imageHeight: .2,
-                         imageWidth: double.infinity,
-                         heightBox: .3,
-                         image: imageSpent,
-                         widthBox: .45,
-                         title: 'Spent'),
-                     CardItem(
-                         tab: () {},
-                         imageHeight: .2,
-                         imageWidth: double.infinity,
-                         heightBox: .3,
-                         image: imageDept,
-                         widthBox: .45,
-                         title: 'Dept'),
-                   ],
-                 ),
-               ],
-             ),
-           ),
-         ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox.square(
+                      dimension: 100,
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        const Text('Good Morning'),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Text(
+                          'Tarek Rabeia',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium!
+                              .copyWith(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    IconButton(onPressed: () {}, icon: const Icon(Icons.window))
+                  ],
+                ),
+                const SizedBox(
+                  height: 38,
+                ),
+                CardItem(
+                  tab: () {},
+                  imageHeight: size.height * .0002,
+                  imageWidth: double.infinity,
+                  heightBox: .29,
+                  image: imageLogo,
+                  widthBox: 1,
+                  title: 'Sales Pro',
+                  subTitle: '',
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CardItem(
+                        tab: () {
+                          Navigator.of(context).pushNamed(AppRoutes.salesChart);
+                        },
+                        imageHeight: size.height * .00007,
+                        imageWidth: size.width * .0002,
+                        heightBox: .25,
+                        image: imageSales,
+                        widthBox: .45,
+                        title: 'Sales',
+                        subTitle: 'Displying total last sales'),
+                    CardItem(
+                        tab: () {},
+                        imageHeight: size.height * .00007,
+                        imageWidth: size.width * .0002,
+                        heightBox: .25,
+                        image: imageIncome,
+                        widthBox: .45,
+                        title: 'Income',
+                        subTitle: 'Displying total last income'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CardItem(
+                        tab: () {},
+                        imageHeight: size.height * .00007,
+                        imageWidth: size.width * .0002,
+                        heightBox: .25,
+                        image: imageSpent,
+                        widthBox: .45,
+                        title: 'Spent',
+                        subTitle: 'Displying total last spent'),
+                    Provider<Database>(
+                      create: (context) => FireStroreDataBase(),
+                      child: CardItem(
+                          tab: () {
+                            Navigator.of(context).pushNamed(AppRoutes.prices);
+                          },
+                          imageHeight: size.height * .00007,
+                          imageWidth: size.width * .0002,
+                          heightBox: .25,
+                          image: imageDept,
+                          widthBox: .45,
+                          title: 'Prices',
+                          subTitle: 'Displying all last Prices'),
+                    ),
+                  ],
+                ),
+              ],
             ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => get(),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }

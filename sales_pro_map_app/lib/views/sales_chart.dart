@@ -26,6 +26,8 @@ class _SalesChartState extends State<SalesChart> {
       barRods: [
         BarChartRodData(
           toY: y.toDouble(),
+          gradient: LinearGradient(colors: [Colors.white,Colors.green]),
+          width: 10
         ),
       ],
     );
@@ -34,18 +36,22 @@ class _SalesChartState extends State<SalesChart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text('sales'),),
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
           child: AspectRatio(
-            aspectRatio: .6,
+            aspectRatio: .8,
             child: BarChart(
               BarChartData(
                   barGroups: [
-                    generateGroupData(4, 8),
+                    generateGroupData(1, 8),
                     generateGroupData(2, 20),
                     generateGroupData(3, 4),
-                    generateGroupData(4, 11),
+                    generateGroupData(4, 6),
+                      generateGroupData(5, 3),
+                        generateGroupData(6, 25),
+                          generateGroupData(7, 44),
                   ],
                   barTouchData: BarTouchData(
                       enabled: true,

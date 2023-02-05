@@ -13,10 +13,10 @@ class Homepage extends StatelessWidget {
   const Homepage({super.key});
   get() async {
     print('inside float');
-    var coll = FirebaseFirestore.instance.collection('items');
+    var coll = FirebaseFirestore.instance.collection('sales');
     print('col $coll');
     var snap = await coll.get();
-    print('snap ${snap.docs[0].data().values}');
+    print('snap ${snap.docs[0].data()}');
     snap.docs.map((e) {
       print(e.data().values);
       print('============================goooooooooo');
@@ -66,7 +66,9 @@ class Homepage extends StatelessWidget {
                   height: 38,
                 ),
                 CardItem(
-                  tab: () {},
+                  tab: () {
+                    get();
+                  },
                   imageHeight: size.height * .0002,
                   imageWidth: double.infinity,
                   heightBox: .29,

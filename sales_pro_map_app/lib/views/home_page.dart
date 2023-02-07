@@ -81,17 +81,20 @@ class Homepage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CardItem(
-                        tab: () {
-                          Navigator.of(context).pushNamed(AppRoutes.salesChart);
-                        },
-                        imageHeight: size.height * .00007,
-                        imageWidth: size.width * .0002,
-                        heightBox: .25,
-                        image: imageSales,
-                        widthBox: .45,
-                        title: 'Sales',
-                        subTitle: 'Displying total last sales'),
+                    Provider<Database>(
+                      create: (context) => FireStroreDataBase(),
+                      child: CardItem(
+                          tab: () {
+                            Navigator.of(context).pushNamed(AppRoutes.salesChart);
+                          },
+                          imageHeight: size.height * .00007,
+                          imageWidth: size.width * .0002,
+                          heightBox: .25,
+                          image: imageSales,
+                          widthBox: .45,
+                          title: 'Sales',
+                          subTitle: 'Displying total last sales'),
+                    ),
                     CardItem(
                         tab: () {},
                         imageHeight: size.height * .00007,

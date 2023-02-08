@@ -4,16 +4,17 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:provider/provider.dart';
 import 'package:sales_pro_map_app/model/sales_model.dart';
+import 'package:sales_pro_map_app/model/transactiom_model.dart';
 import 'package:sales_pro_map_app/services/database_controller.dart';
 
-class SalesChart extends StatefulWidget {
-  const SalesChart({super.key});
+class CreditChart extends StatefulWidget {
+  const CreditChart({super.key});
 
   @override
-  State<SalesChart> createState() => _SalesChartState();
+  State<CreditChart> createState() => _CreditChartState();
 }
 
-class _SalesChartState extends State<SalesChart> {
+class _CreditChartState extends State<CreditChart> {
   late int showingTooltip;
   @override
   void initState() {
@@ -39,7 +40,7 @@ class _SalesChartState extends State<SalesChart> {
     final db = Provider.of<Database>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('sales chart'),
+        title: Text('Credit chart'),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -49,8 +50,8 @@ class _SalesChartState extends State<SalesChart> {
                 padding: EdgeInsets.all(36),
                 child: AspectRatio(
                   aspectRatio: .6,
-                  child: StreamBuilder<List<SalesModel>>(
-                    stream: db.sales(),
+                  child: StreamBuilder<List<TransModel>>(
+                    stream: db.cedit(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.active &&
                           snapshot.hasData) {
@@ -75,7 +76,7 @@ class _SalesChartState extends State<SalesChart> {
                               barGroups: salesList
                                   ?.map((e) => generateGroupData(
                                       int.parse(e.date.substring(0, 2)),
-                                      int.parse(e.sales.toString())))
+                                      int.parse(e.mony.toString())))
                                   .toList(),
                               barTouchData: BarTouchData(
                                   enabled: true,

@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class SalesModel {
   final String date;
-  final double sales;
+  final dynamic sales;
   SalesModel({
     required this.date,
     required this.sales,
@@ -19,7 +19,7 @@ class SalesModel {
   factory SalesModel.fromMap(Map<String, dynamic> map) {
     return SalesModel(
       date: map['date'] as String,
-      sales: map['sales'] as double,
+      sales: map['sales'] ,
     );
   }
 

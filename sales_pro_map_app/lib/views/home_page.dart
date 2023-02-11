@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -7,7 +8,8 @@ import 'package:sales_pro_map_app/services/database_controller.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
 import 'package:sales_pro_map_app/views/prices.dart';
-import 'package:sales_pro_map_app/views/widgets/card.dart';
+import 'package:sales_pro_map_app/widgets/drawer.dart';
+import '../../widgets/card.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -27,7 +29,11 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     final database = Provider.of<Database>(context);
     final size = MediaQuery.of(context).size;
+    GlobalKey<ScaffoldState> scaffolKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+     backgroundColor: Theme.of(context).primaryColor,
+      key: scaffolKey,
+      drawer: MyDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -40,7 +46,7 @@ class Homepage extends StatelessWidget {
                     SizedBox.square(
                       dimension: 100,
                       child: Image.network(
-                        image,
+                        FirebaseAuth.instance.currentUser!.photoURL??image,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -51,15 +57,19 @@ class Homepage extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                          'Tarek Rabeia',
+                         FirebaseAuth.instance.currentUser?.displayName??"anonymous",
                           style: Theme.of(context)
                               .textTheme
-                              .headlineMedium!
+                              .bodyLarge!
                               .copyWith(color: Colors.black),
                         )
                       ],
                     ),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.window))
+                    IconButton(
+                        onPressed: () {
+                          scaffolKey.currentState!.openDrawer();
+                        },
+                        icon: const Icon(Icons.window))
                   ],
                 ),
                 const SizedBox(
@@ -83,40 +93,56 @@ class Homepage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CardItem(
-                        tab: () {
-                          Navigator.of(context).pushNamed(AppRoutes.salesChart);
-                        },
-                        imageHeight: size.height * .00007,
-                        imageWidth: size.width * .0002,
-                        heightBox: .25,
-                        image: imageSales,
-                        widthBox: .45,
-                        title: 'Sales',
-                        subTitle: 'Displying total last sales'),
-                    CardItem(
-                        tab: () {},
-                        imageHeight: size.height * .00007,
-                        imageWidth: size.width * .0002,
-                        heightBox: .25,
-                        image: imageIncome,
-                        widthBox: .45,
-                        title: 'Income',
-                        subTitle: 'Displying total last income'),
+                    Provider<Database>(
+                      create: (context) => FireStroreDataBase(),
+                      child: CardItem(
+                          tab: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.salesChart);
+                          },
+                          imageHeight: size.height * .00007,
+                          imageWidth: size.width * .0002,
+                          heightBox: .25,
+                          image: imageSales,
+                          widthBox: .45,
+                          title: 'Sales',
+                          subTitle: 'Displying total last sales'),
+                    ),
+                    Provider<Database>(
+                      create: (context) => FireStroreDataBase(),
+                      child: CardItem(
+                          tab: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.creditChart);
+                          },
+                          imageHeight: size.height * .00007,
+                          imageWidth: size.width * .0002,
+                          heightBox: .25,
+                          image: imageIncome,
+                          widthBox: .45,
+                          title: 'Credites',
+                          subTitle: 'Displying total last Credites'),
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CardItem(
-                        tab: () {},
-                        imageHeight: size.height * .00007,
-                        imageWidth: size.width * .0002,
-                        heightBox: .25,
-                        image: imageSpent,
-                        widthBox: .45,
-                        title: 'Spent',
-                        subTitle: 'Displying total last spent'),
+                    Provider<Database>(
+                      create: (context) => FireStroreDataBase(),
+                      child: CardItem(
+                          tab: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRoutes.spentChart);
+                          },
+                          imageHeight: size.height * .00007,
+                          imageWidth: size.width * .0002,
+                          heightBox: .25,
+                          image: imageSpent,
+                          widthBox: .45,
+                          title: 'Spent',
+                          subTitle: 'Displying total last spent'),
+                    ),
                     Provider<Database>(
                       create: (context) => FireStroreDataBase(),
                       child: CardItem(

@@ -1,9 +1,19 @@
-const int primaryColor = 0xffe8eaf6;
-const int primaryColorDark = 0x00796B;
+import 'package:flutter/material.dart';
+
+
+
+const Color primaryColor=Color(0xffcbd0d3);
+const Color buttonColor =Color(0xffaa39d3) ;
+const Color primaryTextColor =Colors.white;
+const Color secondaryTextColor =Colors.grey;
+
+
+const int primaryColorDark = 0xffd966;
 const int accentColor = 0xff9E9E9E;
 const int primaryText = 0xff212121;
-const int iconColor = 0xFFF;
-const int buttonColor = 0x757575;
+const int iconColor = 0xFFFFFFFFFF;
+//#05513c
+
 const String itemsCollection = 'items';
 const String image =
     "https://i.pinimg.com/564x/2a/4e/8d/2a4e8dab6791ed643d5180bc72167f6d.jpg";

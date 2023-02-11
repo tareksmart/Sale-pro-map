@@ -33,6 +33,7 @@ class CardItem extends StatelessWidget {
         onTap: tab,
         child: Card(
           color: Colors.white,
+          shadowColor: buttonColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
           elevation: 16,

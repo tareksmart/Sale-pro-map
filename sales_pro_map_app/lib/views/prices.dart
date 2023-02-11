@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:sales_pro_map_app/controller/prov.dart';
 import 'package:sales_pro_map_app/services/database_controller.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
-import 'package:sales_pro_map_app/views/widgets/card_price_item.dart';
-import 'package:sales_pro_map_app/views/widgets/search_field.dart';
+import '../../widgets/card_price_item.dart';
+import '../../widgets/search_field.dart';
 import '../model/product_price.dart';
 import '../services/database_controller.dart';
 
@@ -56,7 +56,7 @@ class _PricesState extends State<Prices> {
                 style: Theme.of(context)
                     .textTheme
                     .headline6!
-                    .copyWith(color: const Color(primaryColor)),
+                    .copyWith(color: primaryTextColor),
               ),
       ),
       body: SizedBox(

@@ -12,10 +12,11 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Color(accentColor),
+      backgroundColor: primaryColor,
       child: ProfileScreen(
         actions: [
           SignedOutAction((context) {
+           
             Navigator.of(context).pushReplacementNamed(AppRoutes.logInPage);
           })
         ],

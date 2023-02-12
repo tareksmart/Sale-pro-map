@@ -16,7 +16,7 @@ class LogInPage extends StatelessWidget {
           child: Column(mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: FirebaseUIActions(actions: [AuthStateChangeAction<SignedIn>((context, state) { 
                      if (!state.user!.emailVerified) {
                         Navigator.pushNamed(context, AppRoutes.verifyEmail);
@@ -25,6 +25,7 @@ class LogInPage extends StatelessWidget {
                       }
                 })],
                 child: LoginView(
+                
                     action: AuthAction.signIn,
                     providers: FirebaseUIAuth.providersFor(
                       FirebaseAuth.instance.app,

@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
@@ -15,8 +14,9 @@ import 'package:sales_pro_map_app/utilities/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-    FirebaseUIAuth.configureProviders([
+  FirebaseUIAuth.configureProviders([
     EmailAuthProvider(),
+
     // ... other providers
   ]);
   runApp(MyApp());
@@ -29,16 +29,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider<Database>(
-      create:(_)=> FireStroreDataBase(),
+      create: (_) => FireStroreDataBase(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: Routers.onGenerateRoute,
-        initialRoute:FirebaseAuth.instance.currentUser==null? AppRoutes.logInPage:AppRoutes.homePage,
+        initialRoute: FirebaseAuth.instance.currentUser == null
+            ? AppRoutes.logInPage
+            : AppRoutes.homePage,
         title: 'Sales Pro Map',
         theme: ThemeData(
-          primaryColor: primaryColor,
-        
-           ),
+          brightness: Brightness.light,
+          inputDecorationTheme: const InputDecorationTheme(
+            border: OutlineInputBorder(),
+          ),
+        ),
       ),
     );
   }

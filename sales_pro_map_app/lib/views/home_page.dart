@@ -31,7 +31,7 @@ class Homepage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     GlobalKey<ScaffoldState> scaffolKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-     backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: primaryColor,
       key: scaffolKey,
       drawer: MyDrawer(),
       body: SafeArea(
@@ -46,7 +46,7 @@ class Homepage extends StatelessWidget {
                     SizedBox.square(
                       dimension: 100,
                       child: Image.network(
-                        FirebaseAuth.instance.currentUser!.photoURL??image,
+                        FirebaseAuth.instance.currentUser!.photoURL ?? image,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -57,7 +57,8 @@ class Homepage extends StatelessWidget {
                           height: 16,
                         ),
                         Text(
-                         FirebaseAuth.instance.currentUser?.displayName??"anonymous",
+                          FirebaseAuth.instance.currentUser?.displayName ??
+                              "Known",
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge!
@@ -76,10 +77,8 @@ class Homepage extends StatelessWidget {
                   height: 38,
                 ),
                 CardItem(
-                  tab: () {
-                    get();
-                  },
-                  imageHeight: size.height * .0002,
+                  tab: () {},
+                  imageHeight: size.height * .00018,
                   imageWidth: double.infinity,
                   heightBox: .29,
                   image: imageLogo,

@@ -4,33 +4,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
+import 'package:sales_pro_map_app/widgets/bottom_navBar.dart';
 
 class LogInPage extends StatelessWidget {
   const LogInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState> scaffolKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      key: scaffolKey,
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: FirebaseUIActions(actions: [AuthStateChangeAction<SignedIn>((context, state) { 
-                     if (!state.user!.emailVerified) {
-                        Navigator.pushNamed(context, AppRoutes.verifyEmail);
+                child: FirebaseUIActions(
+                  actions: [
+                    AuthStateChangeAction<SignedIn>((context, state) {
+                      if (state.user!.displayName != null) {
+                        Navigator.pushNamed(context, AppRoutes.homePage);
                       } else {
-                        Navigator.pushReplacementNamed(context, AppRoutes.homePage);
+                        Navigator.pushNamed(context, AppRoutes.profile);
+                        final snackbar = MySnackbar(message: 'Please');
+                        scaffolKey.currentState!
+                            .showBottomSheet((context) => snackbar);
                       }
-                })],
-                child: LoginView(
-                
+                    })
+                  ],
+                  child: LoginView(
                     action: AuthAction.signIn,
                     providers: FirebaseUIAuth.providersFor(
                       FirebaseAuth.instance.app,
                     ),
-                  ),),
+                  ),
+                ),
               )
             ],
           ),

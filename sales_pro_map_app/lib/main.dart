@@ -24,18 +24,33 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+String get initialRoute {
+    final auth = FirebaseAuth.instance;
+
+    if (auth.currentUser == null || auth.currentUser!.isAnonymous) {
+      return AppRoutes.logInPage;
+    }
+
+    if (auth.currentUser!.displayName==null && auth.currentUser!.email != null) {
+      return AppRoutes.profile;
+    }
+
+    return AppRoutes.profile;
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    
     return Provider<Database>(
       create: (_) => FireStroreDataBase(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: Routers.onGenerateRoute,
-        initialRoute: FirebaseAuth.instance.currentUser == null
-            ? AppRoutes.logInPage
-            : AppRoutes.homePage,
+          initialRoute:initialRoute //FirebaseAuth.instance.currentUser == null
+        //    ? AppRoutes.logInPage
+        //    : AppRoutes.homePage,
+        ,
         title: 'Sales Pro Map',
         theme: ThemeData(
           brightness: Brightness.light,

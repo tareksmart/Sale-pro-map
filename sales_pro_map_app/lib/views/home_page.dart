@@ -11,8 +11,14 @@ import 'package:sales_pro_map_app/views/prices.dart';
 import 'package:sales_pro_map_app/widgets/drawer.dart';
 import '../../widgets/card.dart';
 
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
+
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   get() async {
     print('inside float');
     var coll = FirebaseFirestore.instance.collection('sales');
@@ -46,7 +52,7 @@ class Homepage extends StatelessWidget {
                     SizedBox.square(
                       dimension: 100,
                       child: Image.network(
-                        FirebaseAuth.instance.currentUser!.photoURL ?? image,
+                        /*FirebaseAuth.instance.currentUser!.photoURL ??*/ image,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -68,9 +74,18 @@ class Homepage extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
+                          setState(() {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.of(context)
+                                .pushReplacementNamed(AppRoutes.logInPage);
+                          });
+                        },
+                        icon: const Icon(Icons.logout)),
+                    IconButton(
+                        onPressed: () {
                           scaffolKey.currentState!.openDrawer();
                         },
-                        icon: const Icon(Icons.window))
+                        icon: const Icon(Icons.window_rounded))
                   ],
                 ),
                 const SizedBox(

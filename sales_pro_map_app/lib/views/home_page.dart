@@ -8,6 +8,7 @@ import 'package:sales_pro_map_app/services/database_controller.dart';
 import 'package:sales_pro_map_app/utilities/constant.dart';
 import 'package:sales_pro_map_app/utilities/routes.dart';
 import 'package:sales_pro_map_app/views/prices.dart';
+import 'package:sales_pro_map_app/widgets/bottom_navBar.dart';
 import 'package:sales_pro_map_app/widgets/drawer.dart';
 import '../../widgets/card.dart';
 
@@ -67,8 +68,8 @@ class _HomepageState extends State<Homepage> {
                               "Known",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyLarge!
-                              .copyWith(color: Colors.black),
+                              .headlineSmall!
+                              .copyWith(color: primaryTextColor),
                         )
                       ],
                     ),
@@ -84,6 +85,11 @@ class _HomepageState extends State<Homepage> {
                     IconButton(
                         onPressed: () {
                           scaffolKey.currentState!.openDrawer();
+                          scaffolKey.currentState!.showBottomSheet(
+                            backgroundColor: primaryColor,
+                            (context) => MySnackbar(message: 'message'),
+                            enableDrag: true,
+                          );
                         },
                         icon: const Icon(Icons.window_rounded))
                   ],

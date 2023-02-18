@@ -56,7 +56,7 @@ class CardItem extends StatelessWidget {
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall!
-                    .copyWith(color: Color(primaryText)),
+                    .copyWith(color: primaryTextColor),
               ),
               const SizedBox(
                 height: 40,

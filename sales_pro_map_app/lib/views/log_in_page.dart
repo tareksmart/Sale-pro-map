@@ -12,6 +12,7 @@ class LogInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<ScaffoldState> scaffolKey = GlobalKey<ScaffoldState>();
+      final snackbar = MySnackbar(message: 'Please input user name');
     return Scaffold(
       key: scaffolKey,
       body: SingleChildScrollView(
@@ -27,10 +28,11 @@ class LogInPage extends StatelessWidget {
                       if (state.user!.displayName != null) {
                         Navigator.pushNamed(context, AppRoutes.homePage);
                       } else {
+                        
                         Navigator.pushNamed(context, AppRoutes.profile);
-                        final snackbar = MySnackbar(message: 'Please');
-                        scaffolKey.currentState!
+                       scaffolKey.currentState!
                             .showBottomSheet((context) => snackbar);
+                       
                       }
                     })
                   ],
